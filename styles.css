@@ -17,8 +17,8 @@
 .container {
 	height: 100vh;
 	width: 100%;
-	opacity: 1;
-	background-image: url("./bg/bg.JPG");
+	max-width: 100%;
+	background-image: url("./bg/bg.PNG");
 	background-size: cover;
 	background-position: center;
 }
