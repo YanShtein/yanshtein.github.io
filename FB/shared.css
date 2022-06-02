@@ -36,7 +36,6 @@ footer {
 }
 
 .goBack {
-    position: fixed;
     z-index: 100;
     bottom: 50px;
     left: 50px;
@@ -261,10 +260,16 @@ footer {
     .footer-items {
         flex-direction: row;
     }
+    #goBack-none {
+        position: fixed;
+    }
 }
 
 @media (max-width: 40rem) {
     .header-item__account {
+        display: none;
+    }
+    #goBack-none {
         display: none;
     }
 }
