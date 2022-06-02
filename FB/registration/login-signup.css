@@ -1,0 +1,114 @@
+main {
+    display: flex;
+    justify-content: center;
+    height: 620px;
+}
+
+.form-items {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 20px;
+    color: white;
+}
+
+.form-items h4 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+    inline-size: 250px;
+    overflow-wrap: break-word;
+}
+
+.form-items__social,
+.form-items__login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-items__social-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    background: black;
+    font: inherit;
+    margin: 0.4rem 0;
+    padding: 0.8rem;
+    border-radius: 5px;
+    border: 1px solid white;
+    cursor: pointer;
+    width: 200px;
+}
+
+.form-items__social-button:hover {
+    color: var(--text-hover);
+    border: 1px solid var(--text-hover);
+}
+
+.form-items__login input {
+    outline: none;
+    margin: 5px auto;
+    padding: 0.8rem;
+    background: black;
+    color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    font: inherit;
+    width: 200px;
+}
+
+.form-items__login input:hover,
+.form-items__login input:focus {
+    border: 2px solid white;
+    color: white;
+}
+
+.button {
+    white-space: nowrap;
+    color: white;
+    font-size: 1rem;
+    border-image: linear-gradient(144deg,#AF40FF, #5B42F3 ,#00DDEB) 10;
+    background-color: rgb(5, 6, 45);
+    box-shadow: rgba(151, 65, 252, 0.2) 0 15px 10px -5px;
+    margin: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 70%;
+    animation: wiggle .8s 2s 2;
+    transition: all .2s cubic-bezier(.4, 0, .2, 1);
+}
+
+.button:hover {
+    border-radius: 4px;
+    background-image: linear-gradient(144deg,#AF40FF, #5B42F3 ,#00DDEB);
+}
+
+.form-items__login a {
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px solid var(--text-hover);
+    margin-top: 20px;
+    padding: 8px;
+}
+
+@media (min-width: 40rem) {
+    .form-items {
+        flex-grow: 0.2;
+        border: 1px solid white;
+    }
+}
+
+@keyframes wiggle {
+    0% {
+        transform: rotateZ(0)
+    }
+    50% {
+        transform: rotateZ(-10deg);
+    }
+    100% {
+        transform: rotateZ(10deg);
+    }
+}
