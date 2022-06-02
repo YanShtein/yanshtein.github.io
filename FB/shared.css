@@ -35,6 +35,45 @@ footer {
     grid-template-areas: "header" "main" "footer";
 }
 
+.goBack {
+    position: fixed;
+    z-index: 100;
+    bottom: 50px;
+    left: 50px;
+}
+
+.goBack-text {
+    font-size: 20px;
+    font-weight: 800;
+    background-color: rgb(152, 45, 252);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 6px;
+}
+
+.goBack button {
+    background-color: transparent;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.goBack svg {
+    height: 50px;
+    width: 50px;
+    background-color: rgb(152, 45, 252);
+    color: white;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.goBack svg path {
+    stroke: white;
+    stroke-width: 2px;
+}
+
 .header-items {
     background-color: black;
     padding: 7px;
