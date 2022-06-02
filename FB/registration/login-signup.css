@@ -1,15 +1,17 @@
 main {
     display: flex;
     justify-content: center;
-    height: 620px;
+    height: 100vh;
 }
 
 .form-items {
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-top: 20px;
+    margin-top: 60px;
     color: white;
+    height: fit-content;
+    padding-bottom: 30px;
 }
 
 .form-items h4 {
