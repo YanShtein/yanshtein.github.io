@@ -42,7 +42,6 @@ a {
   margin: auto;
   position: relative;
   z-index: 5;
-  height: 100vh;
   width: 100%;
 }
 
@@ -57,7 +56,7 @@ a {
 
 .hero-nav h2 span,
 .hero-text h1 span,
-.projects h5 span {
+.projects-container h5 span {
   color: var(--aqua-color);
 }
 
