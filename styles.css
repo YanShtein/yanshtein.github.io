@@ -12,7 +12,7 @@
 }
 
 body {
-  background-color: rgb(134, 182, 166);
+  background-color: rgb(17, 17, 17);
 }
 
 #loading {
@@ -20,17 +20,16 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: rgb(113, 172, 167);
+  background-color: rgb(17, 17, 17);
 }
 
-.loader {
-  border: 8px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 8px solid #3498db;
-  width: 60px;
-  height: 60px;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
+.loader span {
+  display: inline-block;
+  font-size: 40px;
+  color: var(--aqua-color);
+  text-transform: uppercase;
+  animation: flip 2s infinite;
+  animation-delay: calc(.2s * var(--i))
 }
 
 #content {
@@ -319,14 +318,10 @@ img {
 	40% {
 		transform: translateY(0%);
 	}
-} 
-
-@-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+@keyframes flip {
+  0% , 70% {
+    transform: rotateY(360deg);
+  }
 }
