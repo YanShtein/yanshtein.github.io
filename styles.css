@@ -37,7 +37,6 @@ body {
 }
 
 .container {
-  overflow-y: scroll;
   scroll-behavior: smooth;
   height: 100vh;
   margin: 0;
