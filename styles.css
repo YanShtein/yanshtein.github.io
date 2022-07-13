@@ -68,6 +68,13 @@ a {
   height: 100vh;
 }
 
+.hero-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+}
+
 .hero-container, 
 .projects-container {
   max-width: 1460px;
@@ -81,7 +88,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 45px;
+  /* padding-top: 45px; */
   padding-left: 6%;
   padding-right: 6%;
 }
@@ -127,7 +134,7 @@ a {
 }
 
 .hero-text {
-  margin-top: 170px;
+  /* margin-top: 170px; */
   padding-left: 6%;
   padding-right: 6%;
 }
@@ -328,9 +335,10 @@ small:hover {
   }
   .hero-nav {
     flex-direction: column;
+    margin-top: 30px;
   }
   .hero-text {
-    margin-top: 100px;
+    margin-top: 30px;
     padding: 0;
   }
   .links {
