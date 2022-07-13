@@ -11,6 +11,10 @@
   font-family: 'Poppins','Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: rgb(17, 17, 17);
 }
@@ -37,8 +41,6 @@ body {
 }
 
 .container {
-  scroll-behavior: smooth;
-  height: 100vh;
   margin: 0;
   padding: 0;
 }
@@ -60,6 +62,10 @@ a {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+#hero {
+  height: 100vh;
 }
 
 .hero-container, 
@@ -167,7 +173,6 @@ h4, h1, h3 {
 }
 
 .projects-container {
-  height: 100%;
   margin-bottom: 50px;
   display: flex;
   flex-direction: column;
@@ -318,8 +323,7 @@ small:hover {
 
 
 @media (max-width: 591px) and (max-height: 950px) {
-  .hero-container, 
-  .projects-container {
+  #hero {
     height: 100%;
   }
   .hero-nav {
@@ -345,12 +349,14 @@ small:hover {
 
 /*horizontal*/
 @media (min-width: 591px) and (max-height: 420px) {
-  .hero-container, 
-  .projects-container {
+  #hero {
     height: 100%;
   }
   .hero-text {
     margin-top: 41px;
+  }
+  .project {
+    width: 310px;
   }
 }
 
