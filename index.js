@@ -3,7 +3,7 @@ $( document ).ready(function() {
 });
 
 let project = document.getElementsByClassName('project');
-let overlay = document.getElementsByClassName('overlay')
+let overlay = document.getElementsByClassName('overlay');
 
 for (let i = 0; i < project.length; i++) {
   project[i].addEventListener("mouseover", function() {
