@@ -68,8 +68,8 @@ function App() {
             />
             <Project 
               img={require('./assets/images/findbyR.PNG')}
-              url="./FB/home.html"
-              repo_url="https://github.com/YanShtein/yanshtein.github.io/tree/main/FB"
+              url="https://yanshtein.github.io/findby/"
+              repo_url="https://github.com/YanShtein/findby"
               title='Ads site'
               description={
                 `The idea of this responsive ads project, is that you login or sign up to be able to favorite ads, 
