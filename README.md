@@ -1,5 +1,3 @@
-Yan Shtein
-
 My Portfolio
 <hr>
 
