@@ -1,4 +1,4 @@
-import { gitSvg, extSvg } from '../assets/svg';
+import { gitSvg, extSvg } from '../../assets/svg';
 
 export default function Project({ img, repo_url, url, title, description, techs, featured, codecamp }) {
   return (

@@ -13,7 +13,7 @@ export default function Header() {
         <div className="hero-text">
           <h4>Hello, my name is</h4>
           <h1>Yana <span>Brushtein</span></h1>
-          <h3>I'am an aspired Web Developer.</h3>
+          <h3>I'am an aspired Front-End Developer.</h3>
           <div className="links">
             <a href="https://github.com/YanShtein" rel="noreferrer">
               <button>
