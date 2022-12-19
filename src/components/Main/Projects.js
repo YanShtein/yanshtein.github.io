@@ -4,11 +4,25 @@ export default function Projects() {
   return (
     <>
 			<Project 
+				img={require('../../assets/images/notes.JPG')}
+				featured={'Featured Project'}
+				url="https://yanshtein.github.io/react_notes_app/"
+				repo_url="https://github.com/YanShtein/react_notes_app"
+				title='Notes App'
+				description={
+					`Notes app enables to create edit & delete notes.
+					The app also makes use of local storage to keep track of edited and deleted notes.`
+				}
+				techs={
+					['React', 'CSS', 'VS code', 'GitHub Pages']
+				}
+			/>
+			<Project 
 				img={require('../../assets/images/form.JPG')}
 				featured={'Featured Project'}
 				url="https://yanshtein.github.io/react_form/"
 				repo_url="https://github.com/YanShtein/react_form"
-				title='React Form'
+				title='Form App'
 				description={
 					`A React form project with login and registration. 
 					Using Formik library for form handling, 
@@ -22,6 +36,20 @@ export default function Projects() {
 			<Project 
 				img={require('../../assets/images/youShop.png')}
 				featured={'Featured Project'}
+				url="https://yanshtein.github.io/shopping-cart-react/"
+				repo_url="https://github.com/YanShtein/shopping-cart-react"
+				title='React Shopping site'
+				description={
+					`A simple responsive React shopping cart app.
+					You can search the items, add items to cart, and change items quantity in cart.
+					The checkout button will perform calculations on items prices and show total price.`
+				}
+				techs={
+					['React', 'JS', 'CSS', 'VS code', 'GitHub Pages']
+				}
+			/>
+			<Project 
+				img={require('../../assets/images/youShop.png')}
 				url="https://yanshtein.github.io/shopping-cart-react-redux/"
 				repo_url="https://github.com/YanShtein/shopping-cart-react-redux"
 				title='React Redux Shopping cart'
@@ -35,18 +63,16 @@ export default function Projects() {
 				}
 			/>
 			<Project 
-				img={require('../../assets/images/youShop.png')}
-				featured={'Featured Project'}
-				url="https://yanshtein.github.io/shopping-cart-react/"
-				repo_url="https://github.com/YanShtein/shopping-cart-react"
-				title='React Shopping cart'
+				img={require('../../assets/images/loginform.PNG')}
+				url="https://codepen.io/yansht/pen/rNdaGYL"
+				repo_url="https://github.com/YanShtein/LoginFormReact"
+				title='Login form'
 				description={
-					`A simple responsive React shopping cart app.
-					You can search the items, add items to cart, and change items quantity in cart.
-					The checkout button will perform calculations on items prices and show total price.`
+					`Login form project uses React hooks to check for valid credentials against a function that simulates an Async request to the server.
+						If credentials are correct you will be connected, else Promise will trigger a reject Error.`
 				}
 				techs={
-					['React', 'JS', 'CSS', 'VS code', 'GitHub Pages']
+					['React', 'JS', 'CSS', 'VS code', 'CodePen']
 				}
 			/>
 			<Project 
@@ -75,19 +101,6 @@ export default function Projects() {
 				}
 				techs={
 					['JS', 'CSS', 'VS code']
-				}
-			/>
-			<Project 
-				img={require('../../assets/images/loginform.PNG')}
-				url="https://codepen.io/yansht/pen/rNdaGYL"
-				repo_url="https://github.com/YanShtein/LoginFormReact"
-				title='Login form'
-				description={
-					`Login form project uses React hooks to check for valid credentials against a function that simulates an Async request to the server.
-						If credentials are correct you will be connected, else Promise will trigger a reject Error.`
-				}
-				techs={
-					['React', 'JS', 'CSS', 'VS code', 'CodePen']
 				}
 			/>
 			<Project 
