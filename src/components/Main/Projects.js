@@ -4,6 +4,21 @@ export default function Projects() {
   return (
     <>
 			<Project 
+				img={require('../../assets/images/hangman.JPG')}
+				featured={'Featured Project'}
+				url="https://yanshtein.github.io/hangman_game/"
+				repo_url="https://github.com/YanShtein/hangman_game"
+				title='Hangman game'
+				description={
+					`React guess the word game, each time an incorrect letter is guessed, the player loses one life, and the hangman
+					2D drawing pieces are shown one by one until game is over. The player can choose between different categories.
+					The game also has keyboard support.`
+				}
+				techs={
+					['React', '2D canvas', 'CSS', 'VS code', 'GitHub Pages']
+				}
+			/>
+			<Project 
 				img={require('../../assets/images/notes.JPG')}
 				featured={'Featured Project'}
 				url="https://yanshtein.github.io/react_notes_app/"
