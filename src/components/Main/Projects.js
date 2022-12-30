@@ -4,6 +4,20 @@ export default function Projects() {
   return (
     <>
 			<Project 
+				img={require('../../assets/images/expenseTracker.JPG')}
+				featured={'Featured Project'}
+				url="https://yanshtein.github.io/expense_tracker/"
+				repo_url="https://github.com/YanShtein/expense_tracker"
+				title='Expense Tracker'
+				description={
+					`The project uses React hooks, Context API & Reducer to show balance, income & expense, as well as history of transactions.
+					Add & delete transactions will affect balance, income & expense amount.`
+				}
+				techs={
+					['React', 'Context API', 'Reducer', 'CSS', 'gh-pages']
+				}
+			/>
+			<Project 
 				img={require('../../assets/images/hangman.JPG')}
 				featured={'Featured Project'}
 				url="https://yanshtein.github.io/hangman_game/"
@@ -15,7 +29,7 @@ export default function Projects() {
 					The game also has keyboard support.`
 				}
 				techs={
-					['React', '2D canvas', 'CSS', 'VS code', 'GitHub Pages']
+					['React', '2D canvas', 'CSS', 'VS code', 'gh-pages']
 				}
 			/>
 			<Project 
@@ -29,7 +43,7 @@ export default function Projects() {
 					The app also makes use of local storage to keep track of edited and deleted notes.`
 				}
 				techs={
-					['React', 'CSS', 'VS code', 'GitHub Pages']
+					['React', 'CSS', 'VS code', 'gh-pages']
 				}
 			/>
 			<Project 
@@ -45,12 +59,11 @@ export default function Projects() {
 					validation schema.`
 				}
 				techs={
-					['React', 'Formik', 'Yup', 'CSS', 'VS code', 'GitHub Pages']
+					['React', 'Formik', 'Yup', 'CSS', 'VS code', 'gh-pages']
 				}
 			/>
 			<Project 
 				img={require('../../assets/images/youShop.png')}
-				featured={'Featured Project'}
 				url="https://yanshtein.github.io/shopping-cart-react/"
 				repo_url="https://github.com/YanShtein/shopping-cart-react"
 				title='React Shopping site'
@@ -60,7 +73,7 @@ export default function Projects() {
 					The checkout button will perform calculations on items prices and show total price.`
 				}
 				techs={
-					['React', 'JS', 'CSS', 'VS code', 'GitHub Pages']
+					['React', 'JS', 'CSS', 'VS code', 'gh-pages']
 				}
 			/>
 			<Project 
@@ -74,7 +87,7 @@ export default function Projects() {
 					The cart page shows total price, items quantity can changed, and items can be removed.`
 				}
 				techs={
-					['React', 'Redux', 'React Router', 'JS', 'CSS', 'VS code', 'GitHub Pages']
+					['React', 'Redux', 'React Router', 'JS', 'CSS', 'VS code', 'gh-pages']
 				}
 			/>
 			<Project 
