@@ -1,8 +1,7 @@
-My Portfolio
+### This personal React portfolio shows all projects I did so far.
+
 <hr>
 
-Hi there!
-My name is Yana Shtein & I am a Front End developer.
+#### Hi!, My name is ${\color{Yellow}Yana\ Shtein}$ & I am looking for my first position as a frond end web developer.
 
-My page was initially written in with HTML, CSS, and JS.
-As I learned more and got more advanced in coding, I decided its time to rewrite the page with React :)
+### As you are on this page looking through, thank you for your time.
