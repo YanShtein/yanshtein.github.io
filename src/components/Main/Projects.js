@@ -4,6 +4,23 @@ export default function Projects() {
   return (
     <>
 			<Project 
+				img={require('../../assets/images/littleLemon.JPG')}
+				codecamp={'META front end developer project'}
+				featured={'Featured Project'}
+				url="https://yanshtein.github.io/little_lemon/"
+				repo_url="https://github.com/YanShtein/little_lemon"
+				title='Little Lemon'
+				description={
+					`Final project of the front end developer certification.
+					The website uses responsive design, and functionalities such as booking option and a simple ordering system.
+					The Website was prototyped using Figma.
+					`
+				}
+				techs={
+					['Figma', 'React', 'Context API', 'Hooks', 'Jest']
+				}
+			/>
+			<Project 
 				img={require('../../assets/images/expenseTracker.JPG')}
 				featured={'Featured Project'}
 				url="https://yanshtein.github.io/expense_tracker/"

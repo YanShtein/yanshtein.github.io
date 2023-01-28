@@ -3,7 +3,7 @@ export default function Header() {
     <section id="hero">
       <div className="hero-container">
         <div className="hero-nav">
-          <h2>Welcome<span>!</span></h2>
+          <h2><span style={{fontSize: '60px'}}>{'<Y>'}</span></h2>
           <ul>
             <li><a href="#hero">Home</a></li>
             <li><a href="#projects">Projects</a></li>
@@ -13,21 +13,21 @@ export default function Header() {
         <div className="hero-text">
           <h4>Hello, my name is</h4>
           <h1>Yana <span>Brushtein</span></h1>
-          <h3>I'am an aspired Front-End Developer.</h3>
+          <h3>I'am an aspired Front-End web developer.</h3>
           <div className="links">
             <a href="https://github.com/YanShtein" rel="noreferrer">
               <button>
-                Check me on GitHub
+                GitHub repositories
               </button>
             </a>
             <a href="https://www.linkedin.com/in/yanshtein" rel="noreferrer">
               <button>
-                Check me on Linkdin	
+                About me on Linkdin	
               </button>
             </a>
             <a href="https://codepen.io/yansht/" rel="noreferrer">
               <button>
-                My projects on CodePen
+                CodePen projects
               </button>
             </a>
           </div>	
