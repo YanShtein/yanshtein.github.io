@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NetSec Notes</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+
+<body>
+  <nav>
+    <h2>Archive</h2>
+    <ul class="category-items">
+      <li><a onclick="loadPage('docs/overview.html', this)" class="active">Overview</a></li>
+    </ul>
+
+    <ul class="nav-tree">
+
+      <!-- Network category -->
+      <li class="category">
+        <button class="category-toggle" onclick="toggleCategory(this)" aria-expanded="true">
+          Network <span class="category-show">▾</span>
+        </button>
+        <ul class="category-items">
+          <li><a onclick="loadPage('docs/ubuntu_nested_vms.html', this)">Ubuntu Nested VMs</a></li>
+        </ul>
+      </li>
+
+      <!-- Cyber category -->
+      <li class="category">
+        <button class="category-toggle" onclick="toggleCategory(this)" aria-expanded="true">
+          Cyber <span class="category-show">▾</span>
+        </button>
+        <ul class="category-items">
+        </ul>
+      </li>
+
+    </ul>
+
+    <div class="nav-footer">
+      <span class="nav-sync" id="last-sync"></span>
+    </div>
+  </nav>
+
+  <main id="content"></main>
+
+  <script src="assets/script.js"></script>
+</body>
+
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projects Documentation</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+
+<body>
+
+  <nav>
+    <h2>Project Hub</h2>
+    <ul>
+      <li><a onclick="loadPage('docs/overview.html', this)" class="active">Overview</a></li>
+      <li><a onclick="loadPage('docs/icmp.html', this)">Network Architecture</a></li>
+      <li><a onclick="loadPage('docs/apache.html', this)">Pentest Findings</a></li>
+      <li><a onclick="loadPage('docs/1_vms.html', this)">Device Configs</a></li>
+    </ul>
+  </nav>
+
+  <main id="content">
+    <p>Loading documentation...</p>
+  </main>
+  <script src="assets/script.js"></script>
+</body>
+
+</html> -->

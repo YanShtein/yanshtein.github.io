@@ -1,0 +1,91 @@
+<h1>Configure communication between Ubuntu guests within nested virtual machines</h1>
+<p>Ubuntu version 22.04.3 LTS</p>
+<p>The topology:</p>
+<p><img alt="Topology" src="../docs/images/ubuntu_nested_vms_topology.png" /></p>
+<p>Configure 2 Host-only interfaces on the host in VirtualBox and disable DHCP:</p>
+<p>First network is 192.168.56.254/24 (.254) is the gateway
+Second network is 192.168.57.254/24</p>
+<p>Host-only interface enables an isolated network in which guests can communicate with each other and the host,
+However outside hosts cannot communicate with that network, as it doesnt have external access.</p>
+<p>Now we need two ubuntu machines(H1 &amp; H2), each will act as the router between our main guest, and the and internal machines H1 &amp; H2.</p>
+<h3>On H1:</h3>
+<ol>
+<li>Install VirtualBox</li>
+<li>Add Host-only adapter with address 192.168.58.1/24 </li>
+<li>Install Ubuntu machine and in its settings -&gt; system -&gt; proccessor,
+enable VT-x for nested vitualization support</li>
+<li>Configure Interface with the host, we will use NetPlan - network configuration file to take control of all networking devices.</li>
+</ol>
+<p>Open this file for interfaces configuration, here we are going to add route to anything thats not within this internal network .254:</p>
+<blockquote>
+<p>sudo subl /etc/netplan/01-network-manager-all.yaml</p>
+</blockquote>
+<pre><code>network:
+    version: 2
+    renderer: NetworkManager
+    ethernets:
+        enp0s3:
+            addresses:
+                - 192.168.56.1/24
+            routes:
+                - to: default
+                  via: 192.168.56.254
+</code></pre>
+<p>Nested network within H1:</p>
+<pre><code>network:
+    version: 2
+    renderer: NetworkManager
+    ethernets:
+        enp0s3:
+            addresses:
+                - 192.168.58.10/24
+            routes:
+                - to: default
+                  via: 192.168.58.254
+</code></pre>
+<h3>On H2:</h3>
+<ol>
+<li>Install VirtualBox</li>
+<li>Add Host-only adapter with address 192.168.57.1/24 </li>
+<li>Install Ubuntu machine and in its settings -&gt; system -&gt; proccessor,
+enable VT-x for nested vitualization support</li>
+<li>Configure Interface with the host, we will use NetPlan - network configuration file to take control of all networking devices.</li>
+</ol>
+<p>Open this file for interfaces configuration, here we are going to add route to anything thats not within this internal network .254:</p>
+<blockquote>
+<p>sudo subl /etc/netplan/01-network-manager-all.yaml</p>
+</blockquote>
+<pre><code>network:
+    version: 2
+    renderer: NetworkManager
+    ethernets:
+        enp0s3:
+            addresses:
+                - 192.168.57.1/24
+            routes:
+                - to: default
+                  via: 192.168.57.254
+</code></pre>
+<p>Nested network within H2:</p>
+<pre><code>network:
+    version: 2
+    renderer: NetworkManager
+    ethernets:
+        enp0s3:
+            addresses:
+                - 192.168.59.10/24
+            routes:
+                - to: default
+                  via: 192.168.59.254
+</code></pre>
+<h4>On H1, H2, host - enable IP forwarding:</h4>
+<p>Forward any packets which do not much the routes in the kernel routing table: (not permanent)</p>
+<blockquote>
+<p>echo 1 &gt; /proc/sys/net/ipv4/ip_forward</p>
+</blockquote>
+<h4>Now for these two isolated networks to communicate, add two routes to these networks on the host:</h4>
+<blockquote>
+<p>sudo ip route add 192.168.58.0/24 via 192.168.56.1
+sudo ip route add 192.168.59.0/24 via 192.168.57.1</p>
+</blockquote>
+<p>Now both guests should be able to ping each other.</p>
