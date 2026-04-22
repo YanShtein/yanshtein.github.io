@@ -1,1 +1,0 @@
-# yanshtein.github.io
