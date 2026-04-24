@@ -22,7 +22,7 @@ body {
     min-height: 100vh;
 }
 
-nav {
+/* nav {
     width: 280px;
     height: 100vh;
     background: var(--sidebar-bg);
@@ -31,6 +31,16 @@ nav {
     padding: 0rem 1rem;
     overflow-y: auto;
     z-index: 100;
+} */
+
+nav {
+    width: 280px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    height: 100vh;
+    top: 0;
+    position: sticky;
+    padding: 1rem;
 }
 
 nav h2 {
@@ -146,6 +156,22 @@ nav h3 {
     margin-top: 2rem;
 }
 
+/* main {
+    margin-left: 280px;
+    padding: 1rem 2rem;
+    width: 100%;
+    transition: opacity 0.3s ease;
+} */
+
+main {
+    padding: 1rem 2rem;
+    width: 100%;
+    transition: opacity 0.3s ease;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 main h1,
 main h2,
 main h3 {
@@ -161,7 +187,6 @@ h4 {
 code {
     /* background-color: var(--code-bg); */
     color: rgb(197, 200, 198);
-    padding: 0.2rem 0.4rem;
     border-radius: 4px;
     font-family: Consolas, monospace;
     font-size: 12px;
@@ -198,13 +223,6 @@ ol {
 
 li {
     margin-bottom: 0.5rem;
-}
-
-main {
-    margin-left: 280px;
-    padding: 1rem 2rem;
-    width: 100%;
-    transition: opacity 0.3s ease;
 }
 
 .fade-in {

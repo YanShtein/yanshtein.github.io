@@ -2,10 +2,11 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NetSec Notes</title>
-  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" type="text/css" href="assets/styles.css" />
+  <link rel="stylesheet" type="text/css" href="assets/code.css" />
 </head>
 
 <body>
@@ -16,7 +17,6 @@
     </ul>
 
     <ul class="nav-tree">
-
       <!-- Network category -->
       <li class="category">
         <button class="category-toggle" onclick="toggleCategory(this)" aria-expanded="true">
@@ -26,11 +26,18 @@
           <li><a onclick="loadPage('docs/ubuntu_nested_vms.html', this)">Ubuntu Nested VMs</a></li>
         </ul>
       </li>
-
       <!-- Cyber category -->
       <li class="category">
         <button class="category-toggle" onclick="toggleCategory(this)" aria-expanded="true">
           Cyber <span class="category-show">▾</span>
+        </button>
+        <ul class="category-items">
+        </ul>
+      </li>
+      <!-- FrontEnd Projects -->
+      <li class="category">
+        <button class="category-toggle" onclick="toggleCategory(this)" aria-expanded="true">
+          FrontEnd Projects <span class="category-show">▾</span>
         </button>
         <ul class="category-items">
         </ul>

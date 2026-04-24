@@ -13,36 +13,35 @@ However outside hosts cannot communicate with that network, as it doesnt have ex
 <li>Install VirtualBox</li>
 <li>Add Host-only adapter with address 192.168.58.1/24 </li>
 <li>Install Ubuntu machine and in its settings -&gt; system -&gt; proccessor,
-enable VT-x for nested vitualization support</li>
-<li>Configure Interface with the host, we will use NetPlan - network configuration file to take control of all networking devices.</li>
+enable <strong>VT-x</strong> for nested vitualization support</li>
+<li>Configure Interface with the host, we will use <strong>NetPlan</strong> - network configuration file to take control of all networking devices.</li>
 </ol>
-<p>Open this file for interfaces configuration, here we are going to add route to anything thats not within this internal network .254:</p>
-<blockquote>
-<p>sudo subl /etc/netplan/01-network-manager-all.yaml</p>
-</blockquote>
-<pre><code>network:
-    version: 2
-    renderer: NetworkManager
-    ethernets:
-        enp0s3:
-            addresses:
-                - 192.168.56.1/24
-            routes:
-                - to: default
-                  via: 192.168.56.254
-</code></pre>
-<p>Nested network within H1:</p>
-<pre><code>network:
-    version: 2
-    renderer: NetworkManager
-    ethernets:
-        enp0s3:
-            addresses:
-                - 192.168.58.10/24
-            routes:
-                - to: default
-                  via: 192.168.58.254
-</code></pre>
+<p>Edit <code>/etc/netplan/01-network-manager-all.yaml</code> on <strong>H1</strong> for interfaces configuration, here we are going to add route to anything thats not within this internal network .254:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">network</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">    </span><span class="nt">renderer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NetworkManager</span>
+<span class="w">    </span><span class="nt">ethernets</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">enp0s3</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">addresses</span><span class="p">:</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.56.1/24</span>
+<span class="w">            </span><span class="nt">routes</span><span class="p">:</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="w">                </span><span class="nt">via</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.56.254</span>
+</code></pre></div>
+
+<p>Edit the same file on H1 Guest:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">network</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">    </span><span class="nt">renderer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NetworkManager</span>
+<span class="w">    </span><span class="nt">ethernets</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">enp0s3</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">addresses</span><span class="p">:</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.58.10/24</span>
+<span class="w">            </span><span class="nt">routes</span><span class="p">:</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="w">                </span><span class="nt">via</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.58.254</span>
+</code></pre></div>
+
 <h3>On H2:</h3>
 <ol>
 <li>Install VirtualBox</li>
@@ -51,41 +50,40 @@ enable VT-x for nested vitualization support</li>
 enable VT-x for nested vitualization support</li>
 <li>Configure Interface with the host, we will use NetPlan - network configuration file to take control of all networking devices.</li>
 </ol>
-<p>Open this file for interfaces configuration, here we are going to add route to anything thats not within this internal network .254:</p>
-<blockquote>
-<p>sudo subl /etc/netplan/01-network-manager-all.yaml</p>
-</blockquote>
-<pre><code>network:
-    version: 2
-    renderer: NetworkManager
-    ethernets:
-        enp0s3:
-            addresses:
-                - 192.168.57.1/24
-            routes:
-                - to: default
-                  via: 192.168.57.254
-</code></pre>
-<p>Nested network within H2:</p>
-<pre><code>network:
-    version: 2
-    renderer: NetworkManager
-    ethernets:
-        enp0s3:
-            addresses:
-                - 192.168.59.10/24
-            routes:
-                - to: default
-                  via: 192.168.59.254
-</code></pre>
-<h4>On H1, H2, host - enable IP forwarding:</h4>
+<p>Edit <code>/etc/netplan/01-network-manager-all.yaml</code> for interfaces configuration, here we are going to add route to anything thats not within this internal network .254:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">network</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">    </span><span class="nt">renderer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NetworkManager</span>
+<span class="w">    </span><span class="nt">ethernets</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">enp0s3</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">addresses</span><span class="p">:</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.57.1/24</span>
+<span class="w">            </span><span class="nt">routes</span><span class="p">:</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="w">                </span><span class="nt">via</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.57.254</span>
+</code></pre></div>
+
+<p>Edit the same file on H2 Guest:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">network</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<span class="w">    </span><span class="nt">renderer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NetworkManager</span>
+<span class="w">    </span><span class="nt">ethernets</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">enp0s3</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">addresses</span><span class="p">:</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.59.10/24</span>
+<span class="w">            </span><span class="nt">routes</span><span class="p">:</span>
+<span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
+<span class="w">                </span><span class="nt">via</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.59.254</span>
+</code></pre></div>
+
+<h4>Enable IP forwarding on H1, H2, host:</h4>
 <p>Forward any packets which do not much the routes in the kernel routing table: (not permanent)</p>
-<blockquote>
-<p>echo 1 &gt; /proc/sys/net/ipv4/ip_forward</p>
-</blockquote>
-<h4>Now for these two isolated networks to communicate, add two routes to these networks on the host:</h4>
-<blockquote>
-<p>sudo ip route add 192.168.58.0/24 via 192.168.56.1
-sudo ip route add 192.168.59.0/24 via 192.168.57.1</p>
-</blockquote>
+<div class="codehilite"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>&gt;<span class="w"> </span>/proc/sys/net/ipv4/ip_forward
+</code></pre></div>
+
+<h4>Add two routes on the host for the two isolated networks to communicate</h4>
+<div class="codehilite"><pre><span></span><code><span class="go">ip route add 192.168.58.0/24 via 192.168.56.1</span>
+<span class="go">ip route add 192.168.59.0/24 via 192.168.57.1</span>
+</code></pre></div>
+
 <p>Now both guests should be able to ping each other.</p>
