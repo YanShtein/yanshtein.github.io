@@ -1,0 +1,139 @@
+<a class="repo" href="https://github.com/YanShtein/NetworkProjects/tree/main/VPN_client_server_C">
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" #
+    class="lucide lucide-terminal w-3 h-3 text-cyan-400" aria-hidden="true">
+    <path d="M12 19h8"></path>
+    <path d="m4 17 6-6-6-6"></path>
+  </svg><span>VPN Client/Server</span>
+</a>
+
+<h1>VPN client/server implementation</h1>
+<p>Topology:</p>
+<p><img alt="Topology" src="../docs/images/vpn_topology.png" /></p>
+<h3>VPN server program flow</h3>
+<ul>
+  <li>Init(PORT)</li>
+  <li>create UDP socket (SOCK_DGRAM)</li>
+  <li>bind socket to IP and port</li>
+  <li>return struct_handle</li>
+  <li>CreateTunDev()</li>
+  <li>ifreq struct - create and init virtual network interface tun0</li>
+  <li>ioctl - set attributes of network interface associated with fd.</li>
+  <li>return tunfd</li>
+  <li>Ifconfig()</li>
+  <li>configure tun0 MTU and IP address</li>
+  <li>ServerConnection(handle)</li>
+  <li>init client address struct, to receive data from client</li>
+  <li>recvfrom() client Hello messgae</li>
+  <li>sendto() client server Hello message</li>
+  <li>SetRouting(0) for server</li>
+  <li>Enter while loop:<ul>
+      <li>fd_set - fill set with tunfd and socket fd</li>
+      <li>select - listen for fd activity on tun0 or socket:</li>
+      <li>TunSelected() ? read message, encapsulate again and sendto peer.</li>
+      <li>SockSelected() ? receive from socket and write to tun0.</li>
+    </ul>
+  </li>
+  <li>CleanUp()</li>
+</ul>
+<h3>VPN client program flow</h3>
+<ul>
+  <li>Init(PORT)</li>
+  <li>create UDP socket (SOCK_DGRAM)</li>
+  <li>bind socket to IP and port</li>
+  <li>return struct_handle</li>
+  <li>ClientConnection(handle)</li>
+  <li>declare timeval and fd_set for timeout trying to connect to server</li>
+  <li>init server address struct, to receive data from server</li>
+  <li>set timeout for 2.5 seconds</li>
+  <li>sendto() server, client Hello message</li>
+  <li>select() check for activity on sockfd till timeout<ul>
+      <li>if recvfrom() server during this time, continue.</li>
+      <li>else terminate!.</li>
+    </ul>
+  </li>
+  <li>CreateTunDev()<ul>
+      <li>ifreq struct - create and init virtual network interface tun0</li>
+      <li>ioctl - set attributes of network interface associated with fd.</li>
+      <li>return tunfd</li>
+    </ul>
+  </li>
+  <li>Ifconfig() configure tun0 MTU and IP address</li>
+  <li>SetRouting(1) for client</li>
+  <li>set timeout for 6 seconds</li>
+  <li>Enter while loop:<ul>
+      <li>fd_set - fill set with tunfd and socket fd</li>
+      <li>select - listen for fd activity on tun0 or socket:</li>
+      <li>TunSelected() ? read message, encapsulate again and sendto peer.</li>
+      <li>SockSelected() ? receive from socket and write to tun0.</li>
+      <li>watch for server response timeout:</li>
+      <li>no response and timeout ? release resources and terminate.</li>
+    </ul>
+  </li>
+  <li>CleanUp()</li>
+</ul>
+<h3>Connection Flow</h3>
+<p>Client requests connection to server:
+  - Server is up and listens?
+  - connect and proceed with client operations.
+  - <strong>client watch for timeout from server during active connection</strong>
+  - server closed connection? client terminate and release resources.
+  - <strong>server watch for timeout from client during active connection</strong>
+  - client closed connection? server terminate and release resources.
+  - Server is down?
+  - notify timeout trying to connect and release resources.</p>
+<h3>Routing and NAT flow</h3>
+<p>R1(client) traffic flows through tun0 -&gt; R1 reaches R2(server) through its gw.<br />
+  R2 reaches R1 through R2 gw.
+  All traffic with source address of tunnel not destined for tunnel, sent to external interface and masqurade.</p>
+<p>R1 with vpn client process running, able to establish connection with R2 vpn server through tunneling.</p>
+<p>R1 sends all its traffic to R2 (vpn server) which masqurades all traffic not belong to vpn subnet,
+  out external interface, to host and out - can browse the web.</p>
+<p>Example of frame protocols encapsulation (using wireshark) visible on external interface and tun0:</p>
+<h4>Client can for example, ftp to server on the tunnel:</h4>
+<p>Captured on <strong>external interface</strong> <strong>[eth:ip:udp:udpencap:esp]</strong>:</p>
+<p>Frame<br />
+  IP packet with internal addresses of client/server<br />
+  udp datagram<br />
+  udpencap - udp encapsulated packet<br />
+  esp - encapsulating security payload - IP packet encapsulated (not encrypted).</p>
+<p>Captured on <strong>tun0</strong> <strong>[raw:ip:tcp:ftp]</strong>:</p>
+<p>Frame<br />
+  IP packet with tunnel addresses<br />
+  tcp segment<br />
+  ftp - application</p>
+<h3>Notes</h3>
+<h4>VPN program will use UDP VPN tunnel to avoid TCP meltdown.</h4>
+<p><strong>TCP meltdown</strong> happens when TCP VPN tunnel transporting another tcp traffic,
+  if packet lost or damaged and packet retransmission required, internal tcp asks for
+  retransmission, the same can happen on the outer TCP which can also experience packet loss, the inner TCP can treat
+  the packets on the outer layer as retransmitted packets leading to delay, and issues.</p>
+<h4>Why not listen() for new connections?</h4>
+<p>As UDP is stateless protocol as oppose to TCP which is connection oriented and have connect protocol initiated with
+  listen / accept, UDP doesnt need to listen for connections, as datagrams can come in any order from any source.</p>
+<div class="codehilite">
+  <pre><span></span><code>nc<span class="w"> </span>localhost<span class="w"> </span><span class="m">4500</span><span class="w"> </span>-u<span class="w"> </span><span class="c1"># connect to udp socket, for testing</span>
+</code></pre>
+</div>
+
+<p><strong>Raw sockets</strong> cannot be binded to port, as port related to TCP and UDP protocols.
+  We work here at low level where concept of port is not known.
+  So it can only read() and write() bytes from and to.
+  Read raw bytes from tun and Write to.</p>
+<p>Make sure tun0 interface exist while running program on the host:</p>
+<div class="codehilite">
+  <pre><span></span><code>ls<span class="w"> </span>/sys/devices/virtual/net/
+</code></pre>
+</div>
+
+<p><strong>tap</strong> - kernel process ethernet frames based on mac.<br />
+  <strong>tun</strong> - kernel process IP packets, routing decisions based on destination IP.
+</p>
+<p><strong>TUN</strong> is a virtual device which is used for point-to-point connections at layer 3.<br />
+  After interface configuration and adjusting the routing table accordingly for the point to point connection:</p>
+<p>When process sends data, the packet will be passed to kernel which will check the route path for this packet in
+  routing table.
+  This packet related to point to point connection, kernel will send the packet through tun0 which will read the data,
+  encapsulate it within another packet, and send back to kernel, this time it will route the packet outside the physical
+  interface.</p>
+<p>Client calls SetRouting to set its routing table accordingly after which it will enter a loop.</p>
