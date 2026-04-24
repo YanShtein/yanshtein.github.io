@@ -1,23 +1,36 @@
+<a class="repo" href="dev">
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="lucide lucide-terminal w-3 h-3 text-cyan-400" aria-hidden="true">
+        <path d="M12 19h8"></path>
+        <path d="m4 17 6-6-6-6"></path>
+    </svg><span>Ubuntu Nested VMs</span>
+</a>
+
 <h1>Configure communication between Ubuntu guests within nested virtual machines</h1>
 <p>Ubuntu version 22.04.3 LTS</p>
 <p>The topology:</p>
 <p><img alt="Topology" src="../docs/images/ubuntu_nested_vms_topology.png" /></p>
 <p>Configure 2 Host-only interfaces on the host in VirtualBox and disable DHCP:</p>
 <p>First network is 192.168.56.254/24 (.254) is the gateway
-Second network is 192.168.57.254/24</p>
+    Second network is 192.168.57.254/24</p>
 <p>Host-only interface enables an isolated network in which guests can communicate with each other and the host,
-However outside hosts cannot communicate with that network, as it doesnt have external access.</p>
-<p>Now we need two ubuntu machines(H1 &amp; H2), each will act as the router between our main guest, and the and internal machines H1 &amp; H2.</p>
+    However outside hosts cannot communicate with that network, as it doesnt have external access.</p>
+<p>Now we need two ubuntu machines(H1 &amp; H2), each will act as the router between our main guest, and the and
+    internal machines H1 &amp; H2.</p>
 <h3>On H1:</h3>
 <ol>
-<li>Install VirtualBox</li>
-<li>Add Host-only adapter with address 192.168.58.1/24 </li>
-<li>Install Ubuntu machine and in its settings -&gt; system -&gt; proccessor,
-enable <strong>VT-x</strong> for nested vitualization support</li>
-<li>Configure Interface with the host, we will use <strong>NetPlan</strong> - network configuration file to take control of all networking devices.</li>
+    <li>Install VirtualBox</li>
+    <li>Add Host-only adapter with address 192.168.58.1/24 </li>
+    <li>Install Ubuntu machine and in its settings -&gt; system -&gt; proccessor,
+        enable <strong>VT-x</strong> for nested vitualization support</li>
+    <li>Configure Interface with the host, we will use <strong>NetPlan</strong> - network configuration file to take
+        control of all networking devices.</li>
 </ol>
-<p>Edit <code>/etc/netplan/01-network-manager-all.yaml</code> on <strong>H1</strong> for interfaces configuration, here we are going to add route to anything thats not within this internal network .254:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">network</span><span class="p">:</span>
+<p>Edit <code>/etc/netplan/01-network-manager-all.yaml</code> on <strong>H1</strong> for interfaces configuration, here
+    we are going to add route to anything thats not within this internal network .254:</p>
+<div class="codehilite">
+    <pre><span></span><code><span class="nt">network</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">    </span><span class="nt">renderer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NetworkManager</span>
 <span class="w">    </span><span class="nt">ethernets</span><span class="p">:</span>
@@ -27,10 +40,12 @@ enable <strong>VT-x</strong> for nested vitualization support</li>
 <span class="w">            </span><span class="nt">routes</span><span class="p">:</span>
 <span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
 <span class="w">                </span><span class="nt">via</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.56.254</span>
-</code></pre></div>
+</code></pre>
+</div>
 
 <p>Edit the same file on H1 Guest:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">network</span><span class="p">:</span>
+<div class="codehilite">
+    <pre><span></span><code><span class="nt">network</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">    </span><span class="nt">renderer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NetworkManager</span>
 <span class="w">    </span><span class="nt">ethernets</span><span class="p">:</span>
@@ -40,18 +55,22 @@ enable <strong>VT-x</strong> for nested vitualization support</li>
 <span class="w">            </span><span class="nt">routes</span><span class="p">:</span>
 <span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
 <span class="w">                </span><span class="nt">via</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.58.254</span>
-</code></pre></div>
+</code></pre>
+</div>
 
 <h3>On H2:</h3>
 <ol>
-<li>Install VirtualBox</li>
-<li>Add Host-only adapter with address 192.168.57.1/24 </li>
-<li>Install Ubuntu machine and in its settings -&gt; system -&gt; proccessor,
-enable VT-x for nested vitualization support</li>
-<li>Configure Interface with the host, we will use NetPlan - network configuration file to take control of all networking devices.</li>
+    <li>Install VirtualBox</li>
+    <li>Add Host-only adapter with address 192.168.57.1/24 </li>
+    <li>Install Ubuntu machine and in its settings -&gt; system -&gt; proccessor,
+        enable VT-x for nested vitualization support</li>
+    <li>Configure Interface with the host, we will use NetPlan - network configuration file to take control of all
+        networking devices.</li>
 </ol>
-<p>Edit <code>/etc/netplan/01-network-manager-all.yaml</code> for interfaces configuration, here we are going to add route to anything thats not within this internal network .254:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">network</span><span class="p">:</span>
+<p>Edit <code>/etc/netplan/01-network-manager-all.yaml</code> for interfaces configuration, here we are going to add
+    route to anything thats not within this internal network .254:</p>
+<div class="codehilite">
+    <pre><span></span><code><span class="nt">network</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">    </span><span class="nt">renderer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NetworkManager</span>
 <span class="w">    </span><span class="nt">ethernets</span><span class="p">:</span>
@@ -61,10 +80,12 @@ enable VT-x for nested vitualization support</li>
 <span class="w">            </span><span class="nt">routes</span><span class="p">:</span>
 <span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
 <span class="w">                </span><span class="nt">via</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.57.254</span>
-</code></pre></div>
+</code></pre>
+</div>
 
 <p>Edit the same file on H2 Guest:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">network</span><span class="p">:</span>
+<div class="codehilite">
+    <pre><span></span><code><span class="nt">network</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
 <span class="w">    </span><span class="nt">renderer</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">NetworkManager</span>
 <span class="w">    </span><span class="nt">ethernets</span><span class="p">:</span>
@@ -74,16 +95,21 @@ enable VT-x for nested vitualization support</li>
 <span class="w">            </span><span class="nt">routes</span><span class="p">:</span>
 <span class="w">                </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">to</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">default</span>
 <span class="w">                </span><span class="nt">via</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">192.168.59.254</span>
-</code></pre></div>
+</code></pre>
+</div>
 
 <h4>Enable IP forwarding on H1, H2, host:</h4>
 <p>Forward any packets which do not much the routes in the kernel routing table: (not permanent)</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>&gt;<span class="w"> </span>/proc/sys/net/ipv4/ip_forward
-</code></pre></div>
+<div class="codehilite">
+    <pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="m">1</span><span class="w"> </span>&gt;<span class="w"> </span>/proc/sys/net/ipv4/ip_forward
+</code></pre>
+</div>
 
 <h4>Add two routes on the host for the two isolated networks to communicate</h4>
-<div class="codehilite"><pre><span></span><code><span class="go">ip route add 192.168.58.0/24 via 192.168.56.1</span>
+<div class="codehilite">
+    <pre><span></span><code><span class="go">ip route add 192.168.58.0/24 via 192.168.56.1</span>
 <span class="go">ip route add 192.168.59.0/24 via 192.168.57.1</span>
-</code></pre></div>
+</code></pre>
+</div>
 
 <p>Now both guests should be able to ping each other.</p>

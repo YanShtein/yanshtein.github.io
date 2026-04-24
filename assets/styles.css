@@ -22,17 +22,6 @@ body {
     min-height: 100vh;
 }
 
-/* nav {
-    width: 280px;
-    height: 100vh;
-    background: var(--sidebar-bg);
-    border-right: 1px solid var(--border-color);
-    position: fixed;
-    padding: 0rem 1rem;
-    overflow-y: auto;
-    z-index: 100;
-} */
-
 nav {
     width: 280px;
     background: var(--sidebar-bg);
@@ -51,7 +40,6 @@ nav h2 {
     margin-bottom: 1.2rem;
 }
 
-/* Tree structure */
 .nav-tree {
     list-style: none;
     padding: 0;
@@ -113,7 +101,6 @@ nav h2 {
     transform: rotate(-90deg);
 }
 
-/* Items list under a category */
 .category-items {
     list-style: none;
     padding: 0 0 0 1rem;
@@ -131,7 +118,6 @@ nav h2 {
     margin-bottom: 3px;
 }
 
-/* Links inside categories */
 .category-items a {
     color: #94a3b8;
     text-decoration: none;
@@ -156,12 +142,33 @@ nav h3 {
     margin-top: 2rem;
 }
 
-/* main {
-    margin-left: 280px;
-    padding: 1rem 2rem;
-    width: 100%;
-    transition: opacity 0.3s ease;
-} */
+.repo {
+    align-items: center;
+    display: flex;
+    text-decoration: none;
+    color: var(--accent-color);
+    gap: 0.25rem;
+    font-size: 13px;
+    width: fit-content;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    padding: 2px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: var(--sidebar-bg);
+}
+
+.repo span {
+    color: var(--content-color);
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.repo:hover {
+    background: #334155;
+    color: var(--accent-color);
+}
 
 main {
     padding: 1rem 2rem;
@@ -185,7 +192,6 @@ h4 {
 }
 
 code {
-    /* background-color: var(--code-bg); */
     color: rgb(197, 200, 198);
     border-radius: 4px;
     font-family: Consolas, monospace;
