@@ -3,43 +3,33 @@
 <h2>Goal</h2>
 <p>At each step the machine presents transformed text and asks for the correct command needed to reverse the transformation.</p>
 <h2>Solution</h2>
-<ol>
-<li>Decode the Base64 string
-Use the <code>base64</code> command with <code>-d</code> flag to decode the base64-encoded text.</li>
-</ol>
+<h3>Decode the Base64 string</h3>
+<p>Use the <code>base64</code> command with <code>-d</code> flag to decode the base64-encoded text.</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;KTJxNW85NjQ1LWZhMDFnQHplMHNmYTRlRy1nazNnLXRhMWZlcmlyRShTR1BicHZj&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d
 <span class="o">)</span>2q5o9645-fa01g@ze0sfa4eG-gk3g-ta1ferirE<span class="o">(</span>SGPbpvc
 </code></pre></div>
 
-<ol>
-<li>Reverse the text
-Use the <code>rev</code> command to reverse the order of characters in the string.</li>
-</ol>
+<h3>Reverse the text</h3>
+<p>Use the <code>rev</code> command to reverse the order of characters in the string.</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;)2q5o9645-fa01g@ze0sfa4eG-gk3g-ta1ferirE(SGPbpvc&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>rev
 cvpbPGS<span class="o">(</span>Eriref1at-g3kg-Ge4afs0ez@g10af-5469o5q2<span class="o">)</span>
 </code></pre></div>
 
-<ol>
-<li>Replaces dashes with underscores
-Use the <code>tr</code> command to translate characters. the hint indicates that underscores (_) were replaced with dashes (-), so we convert them back.</li>
-</ol>
+<h3>Replace dashes with underscores</h3>
+<p>Use the <code>tr</code> command to translate characters. the hint indicates that underscores (_) were replaced with dashes (-), so we convert them back.</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;cvpbPGS(Eriref1at-g3kg-Ge4afs0ez@g10af-5469o5q2)&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span><span class="s1">&#39;-&#39;</span><span class="w"> </span><span class="s1">&#39;_&#39;</span>
 cvpbPGS<span class="o">(</span>Eriref1at_g3kg_Ge4afs0ez@g10af_5469o5q2<span class="o">)</span>
 </code></pre></div>
 
-<ol>
-<li>Replace parentheses with curly brackets
-Use <code>tr</code> again to replace parentheses with curly brackets.</li>
-</ol>
+<h3>Replace parentheses with curly brackets</h3>
+<p>Use <code>tr</code> again to replace parentheses with curly brackets.</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;cvpbPGS(Eriref1at_g3kg_Ge4afs0ez@g10af_5469o5q2)&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span><span class="s1">&#39;()&#39;</span><span class="w"> </span><span class="s1">&#39;{}&#39;</span>
 cvpbPGS<span class="o">{</span>Eriref1at_g3kg_Ge4afs0ez@g10af_5469o5q2<span class="o">}</span>
 </code></pre></div>
 
-<ol>
-<li>Decode the ROT13 transformation
-ROT13 is a Caesar cipher that shifts each letter with 13 positions ahead in the alphabet.<br />
-Use <code>tr</code> to reverse the ROT13 text.</li>
-</ol>
+<h3>Decode the ROT13 transformation</h3>
+<p>ROT13 is a Caesar cipher that shifts each letter with 13 positions ahead in the alphabet.<br />
+Use <code>tr</code> to reverse the ROT13 text.</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;cvpbPGS{Eriref1at_g3kg_Ge4afs0ez@g10af_5469o5q2}&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span><span class="s1">&#39;A-Za-z&#39;</span><span class="w"> </span><span class="s1">&#39;N-ZA-Mn-za-m&#39;</span>
 picoCTF<span class="o">{</span>Revers1ng_t3xt_Tr4nsf0rm@t10ns_5469b5d2<span class="o">}</span>
 </code></pre></div>
