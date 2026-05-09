@@ -40,9 +40,5 @@ function toggleCategory(btn) {
     }
 }
 
-const d = new Date();
-const formatted = d.toISOString().slice(0, 10);
-document.getElementById('last-sync').textContent = 'LAST SYNC: ' + formatted + ' UTC';
-
 // Load default page on start
 window.onload = () => loadPage('../docs/overview.html');

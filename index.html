@@ -36,6 +36,16 @@
           <li><a onclick="loadPage('docs/HackingTools.html', this)">Hacking Tools</a></li>
         </ul>
       </li>
+      <!-- CTF category -->
+      <li class="category">
+        <button class="category-toggle" onclick="toggleCategory(this)" aria-expanded="true">
+          CTF Writeups <span class="category-show">▾</span>
+        </button>
+        <ul class="category-items">
+          <li><a onclick="loadPage('docs/undo.html', this)">Undo</a></li>
+          <li><a onclick="loadPage('docs/mygit.html', this)">My Git</a></li>
+        </ul>
+      </li>
       <!-- FrontEnd Projects -->
       <li class="category">
         <button class="category-toggle" onclick="toggleCategory(this)" aria-expanded="true">
@@ -47,9 +57,6 @@
 
     </ul>
 
-    <div class="nav-footer">
-      <span class="nav-sync" id="last-sync"></span>
-    </div>
   </nav>
 
   <main id="content"></main>
