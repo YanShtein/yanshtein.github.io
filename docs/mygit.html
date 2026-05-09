@@ -63,6 +63,12 @@ git<span class="w"> </span>push
 <ul>
 <li>Git allows users to configure any metadata in the global configuration.</li>
 <li>The server trusted commit metadata without verifying the author's identity.</li>
-<li>No cryptographic verification mechanism such as GPG was used to authenticate commits.</li>
+<li>No cryptographic verification mechanism such as **GPG was used to authenticate commits.</li>
 <li>The challenge only checked the commit author fields.</li>
 </ul>
+<p>GPG used to sign commits in Git to provide cryptographic proof that:
+1. The commit was signed with your private key.
+2. The public key matches your identity.
+3. The signature helps prevents someone from impersonating you as the commit author. Others commits will NOT verify unless signed with your key.
+* Authentication to remote server done with: SSH Keys / HTTPS + Token
+* Commit signing donw with GPG / SSH signing / S/MIME</p>
