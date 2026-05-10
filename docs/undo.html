@@ -1,34 +1,48 @@
+
+<a class="repo" href="https://learn.cylabacademy.org/library/766?page=1" target="_blank">
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        class="lucide lucide-terminal w-3 h-3 text-cyan-400" aria-hidden="true">
+        <path d="M12 19h8"></path>
+        <path d="m4 17 6-6-6-6"></path>
+    </svg><span>Undo</span>
+</a>
 <h1>PicoCTF platform: Undo</h1>
 <p>The challenge involves connecting to a remote machine and reversing multiple text transformation to recover the original flag.</p>
 <h2>Goal</h2>
 <p>At each step the machine presents transformed text and asks for the correct command needed to reverse the transformation.</p>
 <h2>Solution</h2>
 <h3>Decode the Base64 string</h3>
-<p>Use the <code>base64</code> command with <code>-d</code> flag to decode the base64-encoded text.</p>
+<p>Hint: Base64 encoded the string.<br />
+Use the <code>base64</code> command with <code>-d</code> flag to decode the base64-encoded text.</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;KTJxNW85NjQ1LWZhMDFnQHplMHNmYTRlRy1nazNnLXRhMWZlcmlyRShTR1BicHZj&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>base64<span class="w"> </span>-d
 <span class="o">)</span>2q5o9645-fa01g@ze0sfa4eG-gk3g-ta1ferirE<span class="o">(</span>SGPbpvc
 </code></pre></div>
 
 <h3>Reverse the text</h3>
-<p>Use the <code>rev</code> command to reverse the order of characters in the string.</p>
+<p>Hint: Reversed the text.<br />
+Use the <code>rev</code> command to reverse the order of characters in the string.</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;)2q5o9645-fa01g@ze0sfa4eG-gk3g-ta1ferirE(SGPbpvc&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>rev
 cvpbPGS<span class="o">(</span>Eriref1at-g3kg-Ge4afs0ez@g10af-5469o5q2<span class="o">)</span>
 </code></pre></div>
 
 <h3>Replace dashes with underscores</h3>
-<p>Use the <code>tr</code> command to translate characters. the hint indicates that underscores (_) were replaced with dashes (-), so we convert them back.</p>
+<p>Hint: Replaced underscores with dashes.<br />
+Use the <code>tr</code> command to translate characters and convert them back.</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;cvpbPGS(Eriref1at-g3kg-Ge4afs0ez@g10af-5469o5q2)&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span><span class="s1">&#39;-&#39;</span><span class="w"> </span><span class="s1">&#39;_&#39;</span>
 cvpbPGS<span class="o">(</span>Eriref1at_g3kg_Ge4afs0ez@g10af_5469o5q2<span class="o">)</span>
 </code></pre></div>
 
 <h3>Replace parentheses with curly brackets</h3>
-<p>Use <code>tr</code> again to replace parentheses with curly brackets.</p>
+<p>Hint: Replaced curly braces with parentheses.<br />
+Use <code>tr</code> again to replace parentheses with curly brackets.</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;cvpbPGS(Eriref1at_g3kg_Ge4afs0ez@g10af_5469o5q2)&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span><span class="s1">&#39;()&#39;</span><span class="w"> </span><span class="s1">&#39;{}&#39;</span>
 cvpbPGS<span class="o">{</span>Eriref1at_g3kg_Ge4afs0ez@g10af_5469o5q2<span class="o">}</span>
 </code></pre></div>
 
 <h3>Decode the ROT13 transformation</h3>
-<p>ROT13 is a Caesar cipher that shifts each letter with 13 positions ahead in the alphabet.<br />
+<p>Hint: Applied ROT13 to letters.<br />
+ROT13 is a Caesar cipher that shifts each letter with 13 positions ahead in the alphabet.<br />
 Use <code>tr</code> to reverse the ROT13 text.</p>
 <div class="codehilite"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;cvpbPGS{Eriref1at_g3kg_Ge4afs0ez@g10af_5469o5q2}&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span><span class="s1">&#39;A-Za-z&#39;</span><span class="w"> </span><span class="s1">&#39;N-ZA-Mn-za-m&#39;</span>
 picoCTF<span class="o">{</span>Revers1ng_t3xt_Tr4nsf0rm@t10ns_5469b5d2<span class="o">}</span>
@@ -37,10 +51,33 @@ picoCTF<span class="o">{</span>Revers1ng_t3xt_Tr4nsf0rm@t10ns_5469b5d2<span clas
 <h3>Final Flag:</h3>
 <p>picoCTF{Revers1ng_t3xt_Tr4nsf0rm@t10ns_5469b5d2}</p>
 <h2>Commands Used</h2>
-<ul>
-<li>base64 -d # decodes base 64 string</li>
-<li>rev # reverses order of characters in string</li>
-<li>tr '-' '_' # replaces dashes with underscores</li>
-<li>tr '()' '{}' # replace parentheses with curly brackets</li>
-<li>tr 'A-Za-z' 'N-ZA-Mn-za-m' # decodes/encodes rot13 cipher</li>
-</ul>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>base64 -d</td>
+<td>decodes base 64 string</td>
+</tr>
+<tr>
+<td>rev</td>
+<td>reverses order of characters in string</td>
+</tr>
+<tr>
+<td>tr '-' '_'</td>
+<td>replaces dashes with underscores</td>
+</tr>
+<tr>
+<td>tr '()' '{}'</td>
+<td>replace parentheses with curly brackets</td>
+</tr>
+<tr>
+<td>tr 'A-Za-z' 'N-ZA-Mn-za-m'</td>
+<td>decodes/encodes rot13 cipher</td>
+</tr>
+</tbody>
+</table>
